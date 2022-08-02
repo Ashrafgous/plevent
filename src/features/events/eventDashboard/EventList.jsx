@@ -1,12 +1,11 @@
 import EventListItem from "./EventListItem";
 
-const EventList = () => {
+const EventList = (props) => {
   return (
     <div>
-      <EventListItem />
-      <EventListItem />
-      <EventListItem />
-      <EventListItem />
+      {props.events.map((event) => (
+        <EventListItem event={event} key={event.id}/>
+      ))}
     </div>
   );
 };
