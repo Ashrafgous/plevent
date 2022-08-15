@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
 
-const EventForm = ({ match }) => {
+const EventForm = ({ match, history }) => {
   const dispatch = useDispatch();
   const selectedEvent = useSelector((state) =>
     state.event.events.find((e) => e.id === match.params.id)
@@ -32,6 +32,7 @@ const EventForm = ({ match }) => {
             hostPhotoURL: "/assets/user.png",
           })
         );
+        history.push('/events')
   }
 
   function handleInputChange(e) {
