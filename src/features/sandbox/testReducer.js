@@ -19,7 +19,7 @@ const initialState = {
 };
 
 export default function testReducer(state = initialState, {type, payload}) {
-  switch (action.type) {
+  switch (type) {
     case INCREMENT_COUNTER:
       return {
         ...state,
