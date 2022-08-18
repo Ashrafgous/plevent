@@ -1,10 +1,11 @@
 import cuid from "cuid";
 import { useState } from "react";
-import { Segment, Header, Button, FormField } from "semantic-ui-react";
+import { Segment, Header, Button, FormField, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const EventForm = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -19,37 +20,37 @@ const EventForm = ({ match, history }) => {
     venue: "",
     date: "",
   };
-  const [values, setValues] = useState(initialValues);
 
-  function handleFormSubmit() {
-    selectedEvent
-      ? dispatch(updateEvent({ ...selectedEvent, ...values }))
-      : dispatch(
-          createEvent({
-            ...values,
-            id: cuid(),
-            hostedBy: "Bob",
-            attendees: [],
-            hostPhotoURL: "/assets/user.png",
-          })
-        );
-    history.push("/events");
-  }
+  const validationSchema = Yup.object({
+    title: Yup.string().required('You must Provide a title')
+  });
+  // function handleFormSubmit() {
+  //   selectedEvent
+  //     ? dispatch(updateEvent({ ...selectedEvent, ...values }))
+  //     : dispatch(
+  //         createEvent({
+  //           ...values,
+  //           id: cuid(),
+  //           hostedBy: "Bob",
+  //           attendees: [],
+  //           hostPhotoURL: "/assets/user.png",
+  //         })
+  //       );
+  //   history.push("/events");
+  // }
 
-  function handleInputChange(e) {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-  }
   return (
     <Segment clearing>
       <Header content={selectedEvent ? "Edit the Event" : "Create new event"} />
       <Formik
         initialValues={initialValues}
+        validationSchema={validationSchema}
         onSubmit={(values) => console.log(values)}
       >
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Event title" />
+            <ErrorMessage name="title" render={error => <Label basic color="red" content={error}/>}/>
           </FormField>
           <FormField>
             <Field name="category" placeholder="Category" />
