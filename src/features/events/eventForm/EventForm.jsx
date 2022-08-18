@@ -3,10 +3,12 @@ import { Segment, Header, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createEvent, updateEvent } from "../eventActions";
-import { Formik, Form} from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
+import MySelectInput from "../../../app/common/form/MySelectInput";
+import { categoryData } from "../../../app/api/categoryOptions";
 
 const EventForm = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -54,12 +56,16 @@ const EventForm = ({ match, history }) => {
         <Form className="ui form">
           <Header sub color="teal" content="Event Details" />
           <MyTextInput name="title" placeholder="Event Title" />
-          <MyTextInput name="category" placeholder="Event category" />
-          <MyTextArea name="description" placeholder="description" rows="3"/>
+          <MySelectInput
+            name="category"
+            placeholder="Event category"
+            options={categoryData}
+          />
+          <MyTextArea name="description" placeholder="description" rows="3" />
           <Header sub color="teal" content="Event Location Details" />
           <MyTextInput name="city" placeholder="city" />
           <MyTextInput name="venue" placeholder="venue" />
-          <MyTextInput name="date" placeholder="Event date"  type="date"/>
+          <MyTextInput name="date" placeholder="Event date" type="date" />
 
           <Button type="submit" floated="right" positive content="Submit" />
           <Button
