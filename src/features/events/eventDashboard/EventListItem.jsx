@@ -3,6 +3,7 @@ import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
 import { useDispatch } from "react-redux";
 import { deleteEvent } from "../eventActions";
+import {format} from 'date-fns'
 
 const EventListItem = ({ event }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const EventListItem = ({ event }) => {
       <Segment>
         <span>
           <Icon name="clock" />
-          {event.date}
+          {format(event.date, "MMMM d, yyyy h:mm a")}
           <Icon name="marker" /> {event.venue}
         </span>
       </Segment>

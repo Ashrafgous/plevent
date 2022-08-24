@@ -54,34 +54,46 @@ const EventForm = ({ match, history }) => {
           history.push("/events");
         }}
       >
-        <Form className="ui form">
-          <Header sub color="teal" content="Event Details" />
-          <MyTextInput name="title" placeholder="Event Title" />
-          <MySelectInput
-            name="category"
-            placeholder="Event category"
-            options={categoryData}
-          />
-          <MyTextArea name="description" placeholder="description" rows="3" />
-          <Header sub color="teal" content="Event Location Details" />
-          <MyTextInput name="city" placeholder="city" />
-          <MyTextInput name="venue" placeholder="venue" />
-          <MyDateInput name="date" placeholderText="Event date" 
-          timeFormat="HH:mm"
-          showTimeSelect
-          timeCaption='true'
-          dateformat="MMMM d, yyyy h:mm a"
-          />
+        {({ isSubmitting, dirty, isValid }) => (
+          <Form className="ui form">
+            <Header sub color="teal" content="Event Details" />
+            <MyTextInput name="title" placeholder="Event Title" />
+            <MySelectInput
+              name="category"
+              placeholder="Event category"
+              options={categoryData}
+            />
+            <MyTextArea name="description" placeholder="description" rows="3" />
+            <Header sub color="teal" content="Event Location Details" />
+            <MyTextInput name="city" placeholder="city" />
+            <MyTextInput name="venue" placeholder="venue" />
+            <MyDateInput
+              name="date"
+              placeholderText="Event date"
+              timeFormat="HH:mm"
+              showTimeSelect
+              timeCaption="true"
+              dateformat="MMMM d, yyyy h:mm a"
+            />
 
-          <Button type="submit" floated="right" positive content="Submit" />
-          <Button
-            as={Link}
-            to="/events"
-            type="submit"
-            floated="right"
-            content="Cancel"
-          />
-        </Form>
+            <Button
+              loading={isSubmitting}
+              disabled={!isValid || !dirty || isSubmitting}
+              type="submit"
+              floated="right"
+              positive
+              content="Submit"
+            />
+            <Button
+            disabled={isSubmitting}
+              as={Link}
+              to="/events"
+              type="submit"
+              floated="right"
+              content="Cancel"
+            />
+          </Form>
+        )}
       </Formik>
     </Segment>
   );
